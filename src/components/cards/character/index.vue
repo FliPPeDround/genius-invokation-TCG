@@ -6,8 +6,8 @@ interface Props {
 const { character, hp } = defineProps<Props>()
 
 const getCharacterSrc = (name: string): string => {
-  const picModules = import.meta.glob('./character/*.png', { eager: true })
-  const path = `./character/${name}.png`
+  const picModules = import.meta.glob('./assets/*.png', { eager: true })
+  const path = `./assets/${name}.png`
   return (picModules[path]! as { default: string }).default
 }
 </script>

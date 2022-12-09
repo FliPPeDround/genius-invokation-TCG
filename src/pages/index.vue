@@ -3,8 +3,7 @@
 
 <template>
   <div flex>
-
-    <card character="Keqing" :hp="10"/>
-    <card character="Fischl" :hp="10" />
+    <character character="Keqing" :hp="10"/>
+    <character character="Fischl" :hp="10" />
   </div>
 </template>
