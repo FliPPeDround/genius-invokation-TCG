@@ -22,12 +22,15 @@ const getCharacterSrc = (name: string): string => {
       :src="getCharacterSrc(character)"
       absolute
       w-20vw h-34vw
+      align-bottom
     >
     <div
       class="bg-bar"
+      align-bottom
     />
     <div
       class="hp-icon"
+      align-bottom
     >
       {{ hp }}
     </div>
@@ -37,7 +40,7 @@ const getCharacterSrc = (name: string): string => {
 <style scoped>
 .bg-bar{
   width: 20vw;
-  height: 34.1vw;
+  height: 34vw;
   background: url(/cards/card_bg.png);
   background-size: 100% 100%;
   position: absolute;
