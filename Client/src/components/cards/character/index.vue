@@ -22,15 +22,13 @@ const getCharacterSrc = (name: string): string => {
       :src="getCharacterSrc(character)"
       absolute
       w-20vw h-34vw
-      align-bottom
+      v-bottom
     >
     <div
       class="bg-bar"
-      align-bottom
     />
     <div
       class="hp-icon"
-      align-bottom
     >
       {{ hp }}
     </div>
