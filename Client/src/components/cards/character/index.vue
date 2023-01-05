@@ -22,7 +22,7 @@ const getCharacterSrc = (name: string): string => {
       :src="getCharacterSrc(character)"
       absolute
       w-20vw h-34vw
-      v-bottom
+      align-bottom
     >
     <div
       class="bg-bar"

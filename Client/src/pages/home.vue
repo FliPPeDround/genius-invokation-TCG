@@ -1,11 +1,21 @@
 <script setup lang="ts">
+const el = ref(null)
+const { toggle } = useFullscreen(el)
 </script>
 
 <template>
-  <button btn>
-    创建房间
-  </button>
-  <button btn>
-    加入房间
-  </button>
+  <div ref="el">
+    <button btn>
+      创建房间
+    </button>
+    <button btn>
+      加入房间
+    </button>
+    <button @click="toggle">
+      全屏
+    </button>
+    <button btn>
+      登录
+    </button>
+  </div>
 </template>
