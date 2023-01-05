@@ -20,12 +20,4 @@ request.interceptors.response.use(
       window.location.reload()
   },
 )
-
-const a: API.Response<number> = {
-  code: 1,
-  message: '1',
-  data: 'asd',
-}
-console.log(a)
-
 export default request
