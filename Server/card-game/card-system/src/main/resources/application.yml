@@ -3,3 +3,6 @@ server:
 spring:
   application:
     name: card-game
+logging:
+  config:
+    classpath: log4j2.xml
