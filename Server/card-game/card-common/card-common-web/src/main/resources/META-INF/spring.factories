@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.card.game.common.web.config.WebMvcConfig,\
+  com.card.game.common.web.exception.GlobalExceptionHandler

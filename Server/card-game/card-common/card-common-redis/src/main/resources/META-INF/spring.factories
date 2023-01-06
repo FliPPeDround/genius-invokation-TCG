@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.card.game.common.redis.config.RedisConfig,\
+  com.card.game.common.redis.RedisCache,\
+  com.card.game.common.redis.config.RedisCacheConfig

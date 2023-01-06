@@ -21,6 +21,11 @@
 
         <!--bean转换版本-->
         <mysql.version>8.0.29</mysql.version>
+
+        <hutool.version>5.8.8</hutool.version>
+        <fastJson2.version>2.0.10</fastJson2.version>
+        <!--bean转换相关-->
+        <dozer.version>6.5.2</dozer.version>
     </properties>
 
 
@@ -85,6 +90,56 @@
                 <artifactId>card-common-web</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.card.game</groupId>
+                <artifactId>card-common-log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.card.game</groupId>
+                <artifactId>card-common-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.card.game</groupId>
+                <artifactId>card-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.card.game</groupId>
+                <artifactId>card-common-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.card.game</groupId>
+                <artifactId>card-common-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastJson2.version}</version>
+            </dependency>
+
+            <!--bean转换依赖-->
+            <dependency>
+                <groupId>com.github.dozermapper</groupId>
+                <artifactId>dozer-spring-boot-starter</artifactId>
+                <version>${dozer.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

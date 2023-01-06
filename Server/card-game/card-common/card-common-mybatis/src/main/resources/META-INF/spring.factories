@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.card.game.common.mybatis.config.MybatisPlusConfig,\
+  com.card.game.common.mybatis.handler.MybatisHandler
