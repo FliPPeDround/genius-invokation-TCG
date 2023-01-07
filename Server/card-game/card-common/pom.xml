@@ -16,6 +16,7 @@
         <module>card-common-log</module>
         <module>card-common-mybatis</module>
         <module>card-common-core</module>
+        <module>card-common-security</module>
     </modules>
 
     <properties>

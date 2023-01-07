@@ -122,6 +122,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.card.game</groupId>
+                <artifactId>card-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
