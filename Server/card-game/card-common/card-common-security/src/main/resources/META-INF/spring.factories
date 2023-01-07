@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.card.game.security.config.SecurityConfig,\
+  com.card.game.security.config.PasswordConfig
