@@ -65,6 +65,15 @@ public class Result<T> implements Serializable {
         return result;
     }
 
+    public static <T> Result<T> success(IResultCode resultCode, T data) {
+        Result<T> result = new Result<>();
+        result.setCode(resultCode.getCode());
+        result.setMessage(resultCode.getMessage());
+        result.setTimestamp(LocalDateTime.now());
+        result.setData(data);
+        return result;
+    }
+
     public static <T> Result<T> error() {
         Result<T> result = new Result<>();
         result.setCode(ResultCode.ERROR.getCode());
@@ -80,6 +89,7 @@ public class Result<T> implements Serializable {
         result.setTimestamp(LocalDateTime.now());
         return result;
     }
+
 
     public static <T> Result<T> error(Integer code, String message) {
         Result<T> result = new Result<>();

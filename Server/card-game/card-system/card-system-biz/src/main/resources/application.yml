@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: card-game
+
+server:
+  port: 8888
+
+
+security:
+  enable:
+    urls:
+      - "/**/*.html"
+      - "/**/*.css"
+      - "/**/*.js"
+      - "/**/swagger*"
+      - "/**/api-docs*"

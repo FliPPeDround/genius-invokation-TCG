@@ -1,7 +1,9 @@
 package com.card.game.security.handler;
 
 
-
+import com.card.game.common.result.Result;
+import com.card.game.common.result.ResultCode;
+import com.card.game.common.web.utils.ServletUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,6 @@ import java.io.IOException;
 public class SecurityAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
+        ServletUtils.writeToJson(response, Result.error(ResultCode.AUTHENTICATION_ERROR.getCode(), exception.getMessage()));
     }
 }

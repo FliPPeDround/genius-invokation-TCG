@@ -10,25 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>card-system</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>card-system-api</module>
+        <module>card-system-biz</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>com.card.game</groupId>
-            <artifactId>card-common-security</artifactId>
-        </dependency>
-
-        <!--springboot测试依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

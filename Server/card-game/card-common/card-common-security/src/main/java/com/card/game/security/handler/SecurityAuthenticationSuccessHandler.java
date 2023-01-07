@@ -2,6 +2,9 @@ package com.card.game.security.handler;
 
 
 import com.card.game.common.redis.RedisCache;
+import com.card.game.common.result.Result;
+import com.card.game.common.result.ResultCode;
+import com.card.game.common.web.utils.ServletUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -28,7 +31,6 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
-
+        ServletUtils.writeToJson(response, Result.success(ResultCode.AUTHENTICATION_SUCCESS, null));
     }
 }

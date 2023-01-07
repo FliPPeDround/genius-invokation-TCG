@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author tomyou
- * @version 1.0 created on 2023/1/6 12:35
+ * @version v1.0 2023-01-07-7:49 PM
  */
 @SpringBootApplication
 public class CardGameApplication {
