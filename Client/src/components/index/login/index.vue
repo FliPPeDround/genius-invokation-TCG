@@ -7,22 +7,22 @@ const emit = defineEmits(['update:modelValue'])
 const loginDialogVisible = useVModel(props, 'modelValue', emit)
 
 const showPassword = ref(false)
-const errorEmail = ref(false)
-const email = ref('')
+const isErrorEmail = ref(false)
+const emailValue = ref('')
 const emitChangeFn = () => {
-  if (isEmail(email.value)) {
+  if (isEmail(emailValue.value)) {
     showPassword.value = true
-    errorEmail.value = false
+    isErrorEmail.value = false
   }
   else {
-    errorEmail.value = true
+    isErrorEmail.value = true
     showPassword.value = false
   }
 }
 
 const emitInputFn = () => {
-  if (email.value === '') {
-    errorEmail.value = false
+  if (emailValue.value === '') {
+    isErrorEmail.value = false
     showPassword.value = false
   }
 }
@@ -49,7 +49,7 @@ const login = () => {
       <div mb-5>
         <div>
           <input
-            v-model="email"
+            v-model="emailValue"
             type="text"
             placeholder="请输入邮箱"
             input
@@ -58,7 +58,7 @@ const login = () => {
             @input="emitInputFn"
           >
         </div>
-        <div v-if="errorEmail" mt-2 ml-2>
+        <div v-if="isErrorEmail" mt-2 ml-2>
           <p color="red">
             邮箱格式错误,请检查后输入
           </p>
