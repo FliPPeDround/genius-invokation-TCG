@@ -9,6 +9,7 @@ const loginDialogVisible = useVModel(props, 'modelValue', emit)
 const showPassword = ref(false)
 const isErrorEmail = ref(false)
 const emailValue = ref('')
+const password = ref('')
 const emitChangeFn = () => {
   if (isEmail(emailValue.value)) {
     showPassword.value = true
@@ -29,6 +30,10 @@ const emitInputFn = () => {
 
 const login = () => {
 }
+
+const allowLoin = computed(() => {
+  return !isErrorEmail.value && emailValue.value !== '' && password.value.length > 6
+})
 </script>
 
 <template>
@@ -47,37 +52,32 @@ const login = () => {
         还未注册账号？输入邮箱📮自动注册
       </p>
       <div mb-5>
-        <div>
-          <input
-            v-model="emailValue"
-            type="text"
-            placeholder="请输入邮箱"
-            input
-            w-60
-            @change="emitChangeFn"
-            @input="emitInputFn"
-          >
-        </div>
-        <div v-if="isErrorEmail" mt-2 ml-2>
-          <p color="red">
-            邮箱格式错误,请检查后输入
-          </p>
-        </div>
+        <input
+          v-model="emailValue"
+          type="text"
+          placeholder="请输入邮箱"
+          input
+          w-60
+          @change="emitChangeFn"
+          @input="emitInputFn"
+        >
+        <p v-if="isErrorEmail" mt-2 ml-2 color="red">
+          邮箱格式错误,请检查后输入
+        </p>
       </div>
       <div v-if="showPassword">
-        <span>
-          <input
-            type="password"
-            placeholder="请输入密码"
-            input
-            w-60
-          >
-        </span>
+        <input
+          v-model="password"
+          type="password"
+          placeholder="请输入密码"
+          input
+          w-60
+        >
       </div>
       <div>
         <button
           btn
-          :disabled="!showPassword"
+          :disabled="!allowLoin"
           w-60
           h-10 mt-10
           text-lg
