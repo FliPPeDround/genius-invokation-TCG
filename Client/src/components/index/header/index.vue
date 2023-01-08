@@ -22,6 +22,7 @@ const openloginDialog = () => {
       color-gray
       hover:color="#F9F4E3"
       cursor-pointer
+      transition duration-200 ease-in-out
       @click="openloginDialog"
     >
       <div mr-4 text-xl>

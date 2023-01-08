@@ -19,6 +19,16 @@ const emitChangeFn = () => {
     showPassword.value = false
   }
 }
+
+const emitInputFn = () => {
+  if (email.value === '') {
+    errorEmail.value = false
+    showPassword.value = false
+  }
+}
+
+const login = () => {
+}
 </script>
 
 <template>
@@ -37,7 +47,7 @@ const emitChangeFn = () => {
         还未注册账号？输入邮箱📮自动注册
       </p>
       <div mb-5>
-        <span>
+        <div>
           <input
             v-model="email"
             type="text"
@@ -45,11 +55,14 @@ const emitChangeFn = () => {
             input
             w-60
             @change="emitChangeFn"
+            @input="emitInputFn"
           >
-        </span>
-        <span v-if="errorEmail">
-          <p color="red">邮箱格式错误</p>
-        </span>
+        </div>
+        <div v-if="errorEmail" mt-2 ml-2>
+          <p color="red">
+            邮箱格式错误,请检查后输入
+          </p>
+        </div>
       </div>
       <div v-if="showPassword">
         <span>
@@ -60,6 +73,18 @@ const emitChangeFn = () => {
             w-60
           >
         </span>
+      </div>
+      <div>
+        <button
+          btn
+          :disabled="!showPassword"
+          w-60
+          h-10 mt-10
+          text-lg
+          @click="login"
+        >
+          登&nbsp;&nbsp;&nbsp;&nbsp;录
+        </button>
       </div>
     </div>
   </tcg-dialog>
