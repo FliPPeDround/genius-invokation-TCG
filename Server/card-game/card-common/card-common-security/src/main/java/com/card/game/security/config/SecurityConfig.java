@@ -2,6 +2,7 @@ package com.card.game.security.config;
 
 import com.card.game.security.handler.SecurityAccessDeniedHandler;
 import com.card.game.security.handler.SecurityAuthenticationEntryPoint;
+import com.card.game.security.repository.SecurityContextRepositoryImpl;
 import com.card.game.security.support.email.MailAuthenticationConfigurer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -26,6 +27,7 @@ public class SecurityConfig {
 
     private final SecurityUrlProperties securityUrlProperties;
 
+    private final SecurityContextRepositoryImpl securityContextRepository;
 
     private final SecurityAccessDeniedHandler securityAccessDeniedHandler;
 
@@ -56,6 +58,13 @@ public class SecurityConfig {
 
         //适配邮箱登陆
         httpSecurity.apply(mailAuthenticationConfigurer);
+
+        // securityContext持久化配置
+        httpSecurity.securityContext((securityContext -> {
+            securityContext.requireExplicitSave(true);
+            securityContext.securityContextRepository(securityContextRepository);
+        }));
+
         return httpSecurity.build();
     }
 

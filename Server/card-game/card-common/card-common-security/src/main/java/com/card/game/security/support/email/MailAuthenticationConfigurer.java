@@ -1,7 +1,8 @@
 package com.card.game.security.support.email;
 
+import com.card.game.common.redis.RedisCache;
 import com.card.game.security.handler.SecurityAuthenticationFailureHandler;
-import com.card.game.security.handler.SecurityAuthenticationSuccessHandler;
+import com.card.game.security.handler.mail.SecurityMailAuthenticationSuccessHandler;
 import com.card.game.security.support.userdetails.SecurityMailUserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,9 +22,11 @@ public class MailAuthenticationConfigurer extends SecurityConfigurerAdapter<Defa
 
     private final SecurityAuthenticationFailureHandler securityAuthenticationFailureHandler;
 
-    private final SecurityAuthenticationSuccessHandler securityAuthenticationSuccessHandler;
+    private final SecurityMailAuthenticationSuccessHandler securityMailAuthenticationSuccessHandler;
 
     private final SecurityMailUserDetailsServiceImpl securityMailUserDetailsService;
+
+    private final RedisCache redisCache;
 
 
     @Override
@@ -32,14 +35,14 @@ public class MailAuthenticationConfigurer extends SecurityConfigurerAdapter<Defa
         //设置AuthenticationManager
         mailAuthenticationFilter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
         //设置认证成功处理器
-        mailAuthenticationFilter.setAuthenticationSuccessHandler(securityAuthenticationSuccessHandler);
+        mailAuthenticationFilter.setAuthenticationSuccessHandler(securityMailAuthenticationSuccessHandler);
         //设置认证失败处理器
         mailAuthenticationFilter.setAuthenticationFailureHandler(securityAuthenticationFailureHandler);
 
         //邮箱认证处理器
         MailAuthenticationProvider mailAuthenticationProvider = new MailAuthenticationProvider();
         mailAuthenticationProvider.setUserDetailsService(securityMailUserDetailsService);
-
+        mailAuthenticationProvider.setRedisCache(redisCache);
 
         //设置认证处理器
         builder.authenticationProvider(mailAuthenticationProvider)

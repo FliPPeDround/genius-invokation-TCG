@@ -26,8 +26,18 @@ public enum ResultCode implements IResultCode, Serializable {
     AUTHENTICATION_SUCCESS(200, "登录成功"),
 
     LOG_OUT_SUCCESS(200, "退出登录成功"),
+    REQUIRE_MAIL_LOGIN_PARAM(500, "登陆认证请求体不能为空"),
 
-    REQUIRE_MAIL_LOGIN_PARAM(500, "登陆认证请求体不能为空");
+    MAIL_CODE_IS_EXPIRE(500,"邮箱验证码已过期,请重新获取!"),
+
+    NEED_REQUIRE_LOGIN(503, "用户已过期,请重新登陆"),
+
+    MAIL_CODE_CHECK_ERROR(500,"验证码错误,请重新输入!"),
+
+    ILLEGAL_TOKEN(504, "非法的Token"),
+    EXPIRED_TOKEN(505, "Token已经过期"),
+
+    ;
 
     private Integer code;
 

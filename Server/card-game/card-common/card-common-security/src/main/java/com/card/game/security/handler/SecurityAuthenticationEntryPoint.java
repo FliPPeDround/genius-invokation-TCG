@@ -1,8 +1,8 @@
 package com.card.game.security.handler;
 
 import com.card.game.common.result.Result;
-import com.card.game.common.result.ResultCode;
 import com.card.game.common.web.utils.ServletUtils;
+import com.card.game.security.threadlocal.ExceptionThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -21,9 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-
+    private final ExceptionThreadLocal exceptionThreadLocal;
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
-        ServletUtils.writeToJson(response, Result.error(ResultCode.UNAUTHORIZED));
+        ServletUtils.writeToJson(response, Result.error(exceptionThreadLocal.getResultCode()));
+        exceptionThreadLocal.clearContext();
     }
 }

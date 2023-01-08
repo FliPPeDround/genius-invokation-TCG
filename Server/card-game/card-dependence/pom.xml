@@ -26,6 +26,8 @@
         <fastJson2.version>2.0.10</fastJson2.version>
         <!--bean转换相关-->
         <dozer.version>6.5.2</dozer.version>
+
+        <druid.version>1.2.11</druid.version>
     </properties>
 
 
@@ -44,20 +46,6 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>mapstruct</artifactId>
-                        <groupId>org.mapstruct</groupId> <!-- 避免冲突 -->
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>guava</artifactId>
-                        <groupId>com.google.guava</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>swagger-annotations</artifactId>
-                        <groupId>io.swagger</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
@@ -117,6 +105,12 @@
 
             <dependency>
                 <groupId>com.card.game</groupId>
+                <artifactId>card-common-message</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.card.game</groupId>
                 <artifactId>card-common-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -156,6 +150,12 @@
                 <groupId>com.github.dozermapper</groupId>
                 <artifactId>dozer-spring-boot-starter</artifactId>
                 <version>${dozer.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
             </dependency>
 
         </dependencies>

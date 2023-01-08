@@ -13,6 +13,7 @@
         <module>card-common</module>
         <module>card-generate</module>
         <module>card-system</module>
+        <module>card-common/card-common-message</module>
     </modules>
 
     <properties>

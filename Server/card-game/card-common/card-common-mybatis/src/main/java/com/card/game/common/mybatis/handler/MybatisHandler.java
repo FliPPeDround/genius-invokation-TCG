@@ -21,16 +21,20 @@ public class MybatisHandler implements MetaObjectHandler {
 
     private static final String UPDATE_BY = "updateBy";
 
+    private static final String DEFAULT_CREATOR ="system";
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
+        this.strictInsertFill(metaObject,CREATE_BY,String.class,DEFAULT_CREATOR);
+        this.strictInsertFill(metaObject,UPDATE_BY,String.class,DEFAULT_CREATOR);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("start update fill ....");
         this.strictUpdateFill(metaObject, UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
+        this.strictInsertFill(metaObject,UPDATE_BY,String.class,DEFAULT_CREATOR);
     }
 }

@@ -12,9 +12,13 @@ public interface SecurityConstants {
 
     String AUTHORIZATION = "Authorization";
 
+    String USER_INFO = "userInfo";
+
     String ACCOUNT_DISABLE = "该账户已被禁用";
 
     String ACCOUNT_LOCKED = "该账号已被锁定";
 
     String ACCOUNT_EXPIRED = "该账号已过期";
+
+    String USER_NOT_EXIST = "用户不存在";
 }

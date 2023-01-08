@@ -1,5 +1,7 @@
 package com.card.game.security.support.userdetails;
 
+import com.card.game.api.user.dto.SysUserDTO;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,11 +13,24 @@ import java.util.Collection;
  */
 public class SecurityMailUserDetails implements UserDetails {
 
+    private final String userName;
 
-    private String userName;
+    private final Boolean lockFlg;
+    @Getter
+    public final SysUserDTO sysUserDTO;
+
+    @Getter
+    private final String mailAccount;
 
     private Collection<? extends GrantedAuthority> authorities;
 
+
+    public SecurityMailUserDetails(SysUserDTO sysUserDTO) {
+        this.sysUserDTO = sysUserDTO;
+        this.userName = sysUserDTO.getUsername();
+        this.lockFlg = sysUserDTO.getLockFlag();
+        this.mailAccount = sysUserDTO.getEmail();
+    }
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
@@ -43,7 +58,7 @@ public class SecurityMailUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.lockFlg;
     }
 
     @Override
