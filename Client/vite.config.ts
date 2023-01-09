@@ -36,6 +36,7 @@ export default ({ mode }: { mode: string }) => {
         dirs: [
           './src/hooks',
           './src/utils',
+          './src/api',
         ],
         vueTemplate: true,
       }),

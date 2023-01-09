@@ -10,10 +10,13 @@ const showPassword = ref(false)
 const isErrorEmail = ref(false)
 const emailValue = ref('')
 const password = ref('')
-const emitChangeFn = () => {
+const emitChangeFn = async () => {
   if (isEmail(emailValue.value)) {
-    showPassword.value = true
-    isErrorEmail.value = false
+    const isRegister = await getIsRegisteredByEmail(emailValue.value)
+    if (isRegister.data) {
+      showPassword.value = true
+      isErrorEmail.value = false
+    }
   }
   else {
     isErrorEmail.value = true

@@ -1,9 +1,13 @@
-// import request from '@/request'
+import request from '@/request'
 
-// const getUserList = (pageInfo: API.UserPageReq) => {
-//   return request.post<unknown, API.Response<API.UserData>, API.UserPageReq>('api/basicInfo/getUserList', pageInfo)
-// }
+const getIsRegisteredByEmail = (email: string) => {
+  return request<string, API.Response<boolean>>({
+    url: '/getIsRegisteredByEmail',
+    method: 'GET',
+    data: email,
+  })
+}
 
-// export {
-//   getUserList,
-// }
+export {
+  getIsRegisteredByEmail,
+}
