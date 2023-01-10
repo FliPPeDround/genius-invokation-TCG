@@ -3,11 +3,13 @@ const showPassword = ref(false)
 const isErrorEmail = ref(false)
 const emailValue = ref('')
 const password = ref('')
+const rePassword = ref('')
+const isRegister = ref(false)
 
 const emitChangeFn = async () => {
   if (isEmail(emailValue.value)) {
-    const isRegister = await getIsRegisteredByEmail(emailValue.value)
-    if (isRegister.data) {
+    isRegister.value = (await getIsRegisteredByEmail(emailValue.value)).data
+    if (isRegister.value) {
       showPassword.value = true
       isErrorEmail.value = false
     }
@@ -22,6 +24,13 @@ const emitInputFn = () => {
   if (emailValue.value === '') {
     isErrorEmail.value = false
     showPassword.value = false
+  }
+}
+
+const rePasswordChangeFn = () => {
+  if (password.value === rePassword.value) {
+    // isErrorEmail.value = false
+    // showPassword.value = false
   }
 }
 </script>
@@ -60,9 +69,19 @@ const emitInputFn = () => {
               placeholder="密码"
             >
           </div>
+          <div mt-4>
+            <input
+              v-if="!isRegister"
+              v-model="rePassword"
+              type="password"
+              input
+              placeholder="再次确认密码"
+              @change="rePasswordChangeFn"
+            >
+          </div>
           <div flex mt-20 justify-between items-center>
             <button btn>
-              登陆
+              {{ isRegister ? '登录' : '注册' }}
             </button>
             <a href="#">忘记密码，点我重置！</a>
           </div>
