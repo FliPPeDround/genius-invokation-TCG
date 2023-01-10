@@ -7,6 +7,7 @@
     justify-between
     h-100vh
     pb-8
+    bg="#EED7B8"
   >
     <Header />
     <div

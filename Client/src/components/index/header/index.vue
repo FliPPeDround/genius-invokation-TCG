@@ -2,9 +2,9 @@
 import TCGLogo from '/logo/tcg_logo.png'
 
 const loginDialogVisible = ref(false)
-const openloginDialog = () => {
-  loginDialogVisible.value = true
-}
+// const openloginDialog = () => {
+//   loginDialogVisible.value = true
+// }
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const openloginDialog = () => {
       hover:color="#F9F4E3"
       cursor-pointer
       transition duration-200 ease-in-out
-      @click="openloginDialog"
+      @click="$router.push('/user/login')"
     >
       <div mr-4 text-xl>
         登&nbsp;录
