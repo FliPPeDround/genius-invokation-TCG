@@ -34,7 +34,7 @@ export default ({ mode }: { mode: string }) => {
         ],
         dts: true,
         dirs: [
-          './src/hooks',
+          './src/hooks/*',
           './src/utils',
           './src/api',
         ],

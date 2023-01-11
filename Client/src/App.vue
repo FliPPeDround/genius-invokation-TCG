@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const animation = ref('slide-left')
+usePageIcon()
 // onBeforeRouteUpdate((to, form) => {
 //   console.log(to, form)
 //   // if (to.meta.index > form.meta.index)
