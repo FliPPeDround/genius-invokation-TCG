@@ -1,41 +1,72 @@
 <script setup lang="ts">
-const showPassword = ref(false)
 const isErrorEmail = ref(false)
 const emailValue = ref('')
 const password = ref('')
 const rePassword = ref('')
-const isRegister = ref(true)
+const isRegisted = ref(true)
+const emailCode = ref('')
+
 const loginLabel = computed(() => {
-  return isRegister.value ? '登录' : '注册'
+  return isRegisted.value ? '登录' : '注册'
 })
-const emitChangeFn = async () => {
+const emailChange = async () => {
+  if (!emailValue.value)
+    return
+
   if (isEmail(emailValue.value)) {
-    isRegister.value = false
-    // isRegister.value = (await getIsRegisteredByEmail(emailValue.value)).data
-    // if (isRegister.value) {
-    //   showPassword.value = true
-    //   isErrorEmail.value = false
-    // }
+    isRegisted.value = (await getIsRegisteredByEmail(emailValue.value)).data
+    if (isRegisted.value)
+      isErrorEmail.value = false
   }
   else {
     isErrorEmail.value = true
-    showPassword.value = false
   }
 }
 
-const emitInputFn = () => {
-  if (emailValue.value === '') {
+const emailInput = () => {
+  if (emailValue.value === '')
     isErrorEmail.value = false
-    showPassword.value = false
-  }
 }
 
 const rePasswordChangeFn = () => {
   if (password.value === rePassword.value) {
     // isErrorEmail.value = false
-    // showPassword.value = false
   }
 }
+
+const loginByEmail = async (email: string, password: string) => {
+  // const res = await login({ email, password })
+  // if (res.code === 200)
+  //   router.push('/')
+}
+
+const registerByEmail = async (email: string, password: string, emailCode: string) => {
+  // const res = await register({ email, password, emailCode })
+  // if (res.code === 200)
+  //   router.push('/')
+}
+
+const login = () => {
+  if (isErrorEmail.value)
+    return
+
+  if (isRegisted.value) {
+    // 登录
+    loginByEmail(emailValue.value, password.value)
+  }
+  else {
+    // 注册
+    registerByEmail(emailValue.value, password.value, emailCode.value)
+  }
+}
+
+const isBtnDisabled = computed(() => {
+  if (isRegisted.value)
+    return !emailValue.value || !password.value || isErrorEmail.value
+
+  else
+    return !emailValue.value || !password.value || !rePassword.value || !emailCode.value || isErrorEmail.value
+})
 </script>
 
 <template>
@@ -51,7 +82,7 @@ const rePasswordChangeFn = () => {
         </h1>
         <p>快{{ loginLabel }}账号，来一场七圣召唤吧！</p>
         <p color-gray text-sm mt-1>
-          {{ isRegister ? '没有账号?输入邮箱将自动注册' : '该邮箱未绑定账号，现为你注册' }}
+          {{ isRegisted ? '没有账号?输入邮箱将自动注册' : '该邮箱未绑定账号，现为你注册' }}
         </p>
         <form mt-12>
           <div>
@@ -60,11 +91,18 @@ const rePasswordChangeFn = () => {
               type="text"
               input
               placeholder="邮箱"
-              @change="emitChangeFn"
-              @input="emitInputFn"
+              @change="emailChange"
+              @input="emailInput"
             >
           </div>
-          <div mt-4>
+          <div v-if="isErrorEmail">
+            <p color-red text-xs ml-2>
+              邮箱格式错误
+            </p>
+          </div>
+          <div
+            :class="isErrorEmail ? '' : 'mt-4'"
+          >
             <input
               v-model="password"
               type="password"
@@ -74,8 +112,8 @@ const rePasswordChangeFn = () => {
           </div>
           <div mt-4>
             <input
-              v-if="!isRegister"
-              v-model="rePassword"
+              v-if="!isRegisted"
+              v-model="emailCode"
               type="password"
               input
               placeholder="再次确认密码"
@@ -84,7 +122,7 @@ const rePasswordChangeFn = () => {
           </div>
           <div mt-4>
             <input
-              v-if="!isRegister"
+              v-if="!isRegisted"
               v-model="rePassword"
               type="text"
               input
@@ -93,10 +131,14 @@ const rePasswordChangeFn = () => {
             >
           </div>
           <div flex mt-20 justify-between items-center>
-            <button btn>
+            <button
+              btn
+              :disabled="isBtnDisabled"
+              @click="login"
+            >
               {{ loginLabel }}
             </button>
-            <a v-if="isRegister" href="#">忘记密码，点我重置！</a>
+            <a v-if="isRegisted" href="#">忘记密码，点我重置！</a>
           </div>
         </form>
       </div>
