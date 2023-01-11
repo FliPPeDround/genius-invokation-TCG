@@ -4,15 +4,18 @@ const isErrorEmail = ref(false)
 const emailValue = ref('')
 const password = ref('')
 const rePassword = ref('')
-const isRegister = ref(false)
-
+const isRegister = ref(true)
+const loginLabel = computed(() => {
+  return isRegister.value ? '登录' : '注册'
+})
 const emitChangeFn = async () => {
   if (isEmail(emailValue.value)) {
-    isRegister.value = (await getIsRegisteredByEmail(emailValue.value)).data
-    if (isRegister.value) {
-      showPassword.value = true
-      isErrorEmail.value = false
-    }
+    isRegister.value = false
+    // isRegister.value = (await getIsRegisteredByEmail(emailValue.value)).data
+    // if (isRegister.value) {
+    //   showPassword.value = true
+    //   isErrorEmail.value = false
+    // }
   }
   else {
     isErrorEmail.value = true
@@ -44,11 +47,11 @@ const rePasswordChangeFn = () => {
     <div class="login-card">
       <div class="column">
         <h1 mb-5 text-4xl font-900>
-          登录
+          {{ loginLabel }}
         </h1>
-        <p>快登录账号，来一场七圣召唤吧！</p>
+        <p>快{{ loginLabel }}账号，来一场七圣召唤吧！</p>
         <p color-gray text-sm mt-1>
-          没有账号?输入邮箱将自动注册
+          {{ isRegister ? '没有账号?输入邮箱将自动注册' : '该邮箱未绑定账号，现为你注册' }}
         </p>
         <form mt-12>
           <div>
@@ -79,11 +82,21 @@ const rePasswordChangeFn = () => {
               @change="rePasswordChangeFn"
             >
           </div>
+          <div mt-4>
+            <input
+              v-if="!isRegister"
+              v-model="rePassword"
+              type="text"
+              input
+              placeholder="邮箱验证码"
+              @change="rePasswordChangeFn"
+            >
+          </div>
           <div flex mt-20 justify-between items-center>
             <button btn>
-              {{ isRegister ? '登录' : '注册' }}
+              {{ loginLabel }}
             </button>
-            <a href="#">忘记密码，点我重置！</a>
+            <a v-if="isRegister" href="#">忘记密码，点我重置！</a>
           </div>
         </form>
       </div>
