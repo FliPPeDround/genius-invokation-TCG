@@ -2,9 +2,9 @@ import request from '@/request'
 
 const getIsRegisteredByEmail = (email: string) => {
   return request<string, API.Response<boolean>>({
-    url: '/getIsRegisteredByEmail',
+    url: '/user/checkUserEmail',
     method: 'GET',
-    data: email,
+    data: { userEmail: email },
   })
 }
 

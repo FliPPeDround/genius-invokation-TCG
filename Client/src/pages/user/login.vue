@@ -1,55 +1,55 @@
 <script setup lang="ts">
-const isErrorEmail = ref(false)
-const emailValue = ref('')
 const password = ref('')
-const rePassword = ref('')
-const isRegisted = ref(true)
 const emailCode = ref('')
 
-const loginLabel = computed(() => {
-  return isRegisted.value ? '登录' : '注册'
-})
+// 邮箱校验
+const emailValue = ref('')
+const isErrorEmail = ref(false)
+const isRegisted = ref(true)
 const emailChange = async () => {
   if (!emailValue.value)
     return
 
   if (isEmail(emailValue.value)) {
+    isErrorEmail.value = false
     isRegisted.value = (await getIsRegisteredByEmail(emailValue.value)).data
-    if (isRegisted.value)
-      isErrorEmail.value = false
   }
   else {
     isErrorEmail.value = true
   }
 }
-
 const emailInput = () => {
   if (emailValue.value === '')
     isErrorEmail.value = false
 }
+const loginLabel = computed(() => {
+  return isRegisted.value ? '登录' : '注册'
+})
 
+// 密码一致性判断
+const rePassword = ref('')
 const rePasswordChangeFn = () => {
   if (password.value === rePassword.value) {
     // isErrorEmail.value = false
   }
 }
 
+// 登录方法
 const loginByEmail = async (email: string, password: string) => {
   // const res = await login({ email, password })
   // if (res.code === 200)
   //   router.push('/')
 }
 
+// 注册方法
 const registerByEmail = async (email: string, password: string, emailCode: string) => {
   // const res = await register({ email, password, emailCode })
   // if (res.code === 200)
   //   router.push('/')
 }
 
+// 登录按钮事件
 const login = () => {
-  if (isErrorEmail.value)
-    return
-
   if (isRegisted.value) {
     // 登录
     loginByEmail(emailValue.value, password.value)
@@ -60,12 +60,13 @@ const login = () => {
   }
 }
 
+// 登录按钮disabled判断
 const isBtnDisabled = computed(() => {
   if (isRegisted.value)
     return !emailValue.value || !password.value || isErrorEmail.value
 
   else
-    return !emailValue.value || !password.value || !rePassword.value || !emailCode.value || isErrorEmail.value
+    return !emailValue.value || !password.value || password.value !== rePassword.value || !emailCode.value || isErrorEmail.value
 })
 </script>
 
@@ -206,7 +207,7 @@ $theme-color: #88abaf;
     .login-card {
         display: block;
         width: 500px;
-        text-align: center;
+        // text-align: center;
         background: url('/logo/login_poster.png') center;
         background-size: cover;
 
