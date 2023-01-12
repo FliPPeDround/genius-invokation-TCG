@@ -32,10 +32,14 @@ public enum ResultCode implements IResultCode, Serializable {
 
     NEED_REQUIRE_LOGIN(503, "用户已过期,请重新登陆"),
 
+    PASSWORD_CHECK_ERROR(500,"密码错误,请重新输入!"),
+
     MAIL_CODE_CHECK_ERROR(500,"验证码错误,请重新输入!"),
 
     ILLEGAL_TOKEN(504, "非法的Token"),
     EXPIRED_TOKEN(505, "Token已经过期"),
+
+    USER_NOT_EXIST(500,"用户还未进行注册,请注册后在进行登录")
 
     ;
 

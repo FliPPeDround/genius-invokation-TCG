@@ -10,11 +10,15 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * @author tomyou
@@ -28,28 +32,29 @@ public class MailAuthenticationProvider implements AuthenticationProvider {
 
     private RedisCache redisCache;
 
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         MailAuthenticationToken mailAuthenticationToken = (MailAuthenticationToken) authentication;
         //邮箱帐号
         String principal = (String) mailAuthenticationToken.getPrincipal();
-        //前端传入的code
-        String mailCode = mailAuthenticationToken.getMailCode();
-        //通过邮箱帐号获取验证码
-        String redisKey = RedisPrefixConstant.MAIL_CODE_PREFIX + principal;
-        String realCode = redisCache.getCacheObject(redisKey);
-        //从redis中没有获取到code说明code已经过期
-        if (StringUtils.isBlank(realCode)) {
-            throw new BizException(ResultCode.MAIL_CODE_IS_EXPIRE);
+        //先从redis中取
+        SecurityMailUserDetails userDetails = redisCache.getCacheObject(RedisPrefixConstant.AUTHENTICATION_PREFIX + principal);
+        //没有获取到查询数据库
+        if (Objects.isNull(userDetails)) {
+            //查询用户信息
+            userDetails = (SecurityMailUserDetails)
+                    ((SecurityMailUserDetailsServiceImpl) userDetailsService).loadUserByMailAccount(principal);
         }
-        //前端传入的code和redis中的code比对不通过 说明code有误
-        if (!(StringUtils.equals(realCode, mailCode))) {
-            throw new BizException(ResultCode.MAIL_CODE_CHECK_ERROR);
+        //前端传入的密码
+        String password = mailAuthenticationToken.getPassword();
+        //进行密码比对
+        boolean matches = passwordEncoder.matches(password, userDetails.getPassword());
+        //密码比对不通过
+        if (!matches) {
+            throw new BadCredentialsException(ResultCode.PASSWORD_CHECK_ERROR.getMessage());
         }
-
-        //查询用户信息
-        SecurityMailUserDetails userDetails = (SecurityMailUserDetails)
-                ((SecurityMailUserDetailsServiceImpl) userDetailsService).loadUserByMailAccount(principal);
 
         MailAuthenticationToken authenticated = MailAuthenticationToken
                 .authenticated(userDetails, Collections.emptyList());

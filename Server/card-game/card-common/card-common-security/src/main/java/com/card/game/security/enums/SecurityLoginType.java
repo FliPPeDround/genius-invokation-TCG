@@ -13,7 +13,6 @@ public enum SecurityLoginType implements IBaseEnum<String> {
 
 
     MAIL("邮箱登陆", "mailType")
-
     ;
     private String typeName;
 

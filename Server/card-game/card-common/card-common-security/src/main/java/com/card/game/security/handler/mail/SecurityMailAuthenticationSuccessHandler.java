@@ -43,13 +43,16 @@ public class SecurityMailAuthenticationSuccessHandler implements AuthenticationS
         log.info("用户：{} 登录成功", principal.getUsername());
         //生成token
         String token = JwtUtil.createJwt(principal, SecurityLoginType.MAIL);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(SecurityConstants.AUTHORIZATION, token);
-        result.put(SecurityConstants.USER_INFO, principal.getSysUserDTO());
 
         //存入redis,1天后过期
         redisCache.setCacheObject(RedisPrefixConstant.AUTHENTICATION_PREFIX + principal.getMailAccount(),
                 principal, 24, TimeUnit.HOURS);
+
+        Map<String, Object> result = Maps.newHashMap();
+        result.put(SecurityConstants.AUTHORIZATION, token);
+        //密码擦除
+        principal.getSysUserDTO().setPassword(null);
+        result.put(SecurityConstants.USER_INFO, principal.getSysUserDTO());
         ServletUtils.writeToJson(response, Result.success(ResultCode.AUTHENTICATION_SUCCESS, result));
     }
 }

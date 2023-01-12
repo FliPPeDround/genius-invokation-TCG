@@ -16,12 +16,12 @@ public class MailAuthenticationToken extends AbstractAuthenticationToken {
     private final Object principal;
 
     @Getter
-    private String mailCode;
+    private String password;
 
     public MailAuthenticationToken(Object principal, String mailCode) {
         super(null);
         this.principal = principal;
-        this.mailCode = mailCode;
+        this.password = mailCode;
         this.setAuthenticated(false);
     }
 
@@ -42,8 +42,8 @@ public class MailAuthenticationToken extends AbstractAuthenticationToken {
     }
 
 
-    public static MailAuthenticationToken unauthenticated(Object principal, String mailCode) {
-        return new MailAuthenticationToken(principal, mailCode);
+    public static MailAuthenticationToken unauthenticated(Object principal, String password) {
+        return new MailAuthenticationToken(principal, password);
     }
 
 

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,8 @@ public class MailAuthenticationConfigurer extends SecurityConfigurerAdapter<Defa
 
     private final RedisCache redisCache;
 
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public void configure(HttpSecurity builder) throws Exception {
@@ -43,6 +46,7 @@ public class MailAuthenticationConfigurer extends SecurityConfigurerAdapter<Defa
         MailAuthenticationProvider mailAuthenticationProvider = new MailAuthenticationProvider();
         mailAuthenticationProvider.setUserDetailsService(securityMailUserDetailsService);
         mailAuthenticationProvider.setRedisCache(redisCache);
+        mailAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 
         //设置认证处理器
         builder.authenticationProvider(mailAuthenticationProvider)

@@ -28,11 +28,11 @@ import java.util.stream.Collectors;
 public class MailAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     public static final String SPRING_SECURITY_FORM_MAIL_ACCOUNT_KEY = "mailAccount";
 
-    public static final String SPRING_SECURITY_FORM_MAIL_CODE_KEY = "mailCode";
+    public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
 
     private String mailAccountParameter = SPRING_SECURITY_FORM_MAIL_ACCOUNT_KEY;
 
-    private String mailCodeParameter = SPRING_SECURITY_FORM_MAIL_CODE_KEY;
+    private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
 
     private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(SecurityConstants.EMAIL_LOGIN_URL,
             HttpMethod.POST.name());
@@ -56,11 +56,11 @@ public class MailAuthenticationFilter extends AbstractAuthenticationProcessingFi
         String mailAccount = map.get(mailAccountParameter);
         mailAccount = mailAccount != null ? mailAccount.trim() : "";
 
-        String mailCode = map.get(mailCodeParameter);
-        mailCode = mailCode != null ? mailCode : "";
+        String password = map.get(passwordParameter);
+        password = password != null ? password : "";
 
         //未认证状态
-        MailAuthenticationToken mailAuthenticationToken = MailAuthenticationToken.unauthenticated(mailAccount,mailCode);
+        MailAuthenticationToken mailAuthenticationToken = MailAuthenticationToken.unauthenticated(mailAccount,password);
         setDetails(request,mailAuthenticationToken);
 
         //执行认证
@@ -77,9 +77,9 @@ public class MailAuthenticationFilter extends AbstractAuthenticationProcessingFi
         this.mailAccountParameter = mailAccountParameter;
     }
 
-    public void setPasswordParameter(String mailCodeParameter) {
-        Assert.hasText(mailCodeParameter, "Password parameter must not be empty or null");
-        this.mailCodeParameter = mailCodeParameter;
+    public void setPasswordParameter(String passwordParameter) {
+        Assert.hasText(passwordParameter, "Password parameter must not be empty or null");
+        this.passwordParameter = passwordParameter;
     }
 
 }

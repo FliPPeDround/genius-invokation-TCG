@@ -8,8 +8,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
@@ -21,18 +25,42 @@ import java.util.UUID;
  * @author tomyou
  * JWT工具类
  */
+@Setter
+@Component
 public class JwtUtil {
 
     /**
      * 60 * 60 *1000  一个小时
      */
-    private static final Long JWT_TTL = 60 * 60 * 1000L;
+
+    private static Long JWT_TTL;
+
+    @Value("${jwt.ttl:3600000}")
+    private Long SAVE_JWT_TTL;
     /**
      * 设置秘钥明文
      */
-    private static final String JWT_KEY = "jwt@@";
 
-    private static final String JWT_ISS_USER = "tomYou";
+    private static String JWT_KEY;
+
+    @Value("${jwt.key:jwt@@}")
+    private String SAVE_JWT_KEY;
+
+    /**
+     * 设置ISS_USER
+     */
+
+    private static String JWT_ISS_USER;
+
+    @Value("${jwt.issUser:tomYou}")
+    private String SAVE_JWT_ISS_USER;
+
+    @PostConstruct
+    public void init() {
+        JWT_TTL = this.SAVE_JWT_TTL;
+        JWT_KEY = this.SAVE_JWT_KEY;
+        JWT_ISS_USER = this.SAVE_JWT_ISS_USER;
+    }
 
     public static String getUUID() {
         return UUID.randomUUID().toString().replaceAll("-", "");
@@ -57,7 +85,7 @@ public class JwtUtil {
      * @return jwt
      */
     public static String createJwt(SecurityMailUserDetails userDetails, SecurityLoginType type) {
-        JwtBuilder builder = getJwtBuilder(userDetails.getMailAccount(), null, getUUID(),type.getValue());
+        JwtBuilder builder = getJwtBuilder(userDetails.getMailAccount(), null, getUUID(), type.getValue());
         return builder.compact();
     }
 
@@ -75,7 +103,7 @@ public class JwtUtil {
     }
 
     private static JwtBuilder getJwtBuilder(String subject, Long ttlMillis, String uuid) {
-        return getJwtBuilder(subject,ttlMillis,uuid,null);
+        return getJwtBuilder(subject, ttlMillis, uuid, null);
     }
 
     private static JwtBuilder getJwtBuilder(String subject, Long ttlMillis, String uuid, String typeCode) {
@@ -88,21 +116,13 @@ public class JwtUtil {
         }
         long expMillis = nowMillis + ttlMillis;
         Date expDate = new Date(expMillis);
-        Map<String,Object> map = Maps.newHashMap();
-        if (StringUtils.isNotBlank(typeCode)){
-            map.put("typeCode",typeCode);
+        Map<String, Object> map = Maps.newHashMap();
+        if (StringUtils.isNotBlank(typeCode)) {
+            map.put("typeCode", typeCode);
         }
-        map.put("subject",subject);
-        return Jwts.builder()
-                .setId(uuid)
-                .setSubject(subject)
-                .setClaims(map)
-                .setIssuer(JWT_ISS_USER)
-                .setIssuedAt(now)
-                .signWith(signatureAlgorithm, secretKey)
-                .setExpiration(expDate);
+        map.put("subject", subject);
+        return Jwts.builder().setId(uuid).setSubject(subject).setClaims(map).setIssuer(JWT_ISS_USER).setIssuedAt(now).signWith(signatureAlgorithm, secretKey).setExpiration(expDate);
     }
-
 
 
     /**
@@ -139,10 +159,7 @@ public class JwtUtil {
      */
     public static Claims parseJWT(String jwt) throws Exception {
         SecretKey secretKey = generalKey();
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(jwt)
-                .getBody();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
     }
 
 }

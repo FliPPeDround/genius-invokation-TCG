@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://localhost:3306/card_game?useUnicode=true&amp&characterEncoding=utf8
+      url: jdbc:mysql://9.135.92.198:3306/card_game?useUnicode=true&amp&characterEncoding=utf8
       username: root
       password: root
       # 初始连接数
@@ -65,7 +65,7 @@ security:
       - "/**/*.js"
       - "/**/swagger*"
       - "/**/api-docs*"
-      - "/user/getCode"
+      - "/user/**"
 
 mybatis-plus:
   global-config:
@@ -77,3 +77,9 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+jwt:
+  ttl: 3600000 #1个小时
+  key: jwt@@
+  iss-user: tomYou

@@ -1,15 +1,14 @@
 package com.card.game.controller;
 
+import com.card.game.api.user.vo.SysUserVO;
 import com.card.game.common.redis.RedisCache;
-import com.card.game.common.redis.constants.RedisPrefixConstant;
 import com.card.game.common.result.Result;
+import com.card.game.pojo.dto.RegisterUserDTO;
 import com.card.game.security.support.userdetails.SecurityMailUserDetails;
+import com.card.game.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -26,16 +25,25 @@ public class SysUserController {
 
     private final RedisCache redisCache;
 
-    @PostMapping("/getCode")
-    public Result<String> getCode() {
-        redisCache.setCacheObject(RedisPrefixConstant.MAIL_CODE_PREFIX + "1667213197@qq.com", "2022");
-        return Result.success();
-    }
+    private final SysUserService sysUserService;
 
 
     @GetMapping("/getUserInfo")
     public Result<SecurityMailUserDetails> getUserInfo() {
         SecurityMailUserDetails principal = (SecurityMailUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return Result.success(principal);
+    }
+
+
+    @PostMapping("/registerUser")
+    public Result<SysUserVO> registerUser(@RequestBody RegisterUserDTO registerUserDTO){
+        SysUserVO sysUserVO = sysUserService.registerUser(registerUserDTO);
+        return Result.success(sysUserVO);
+    }
+
+    @GetMapping("/mail/isUserRegistered/{mailAccount}")
+    public Result<Boolean> isUserRegistered(@PathVariable String mailAccount){
+        Boolean flag =sysUserService.getIsUserRegistered(mailAccount);
+        return Result.success(flag);
     }
 }
