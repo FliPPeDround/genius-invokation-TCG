@@ -6,7 +6,7 @@ const iconName = {
   geo: 'geo',
   hydro: 'hydro',
   pyro: 'pyro',
-}
+} as const
 
 type IconNameType = keyof typeof iconName
 
@@ -17,7 +17,8 @@ function getIcon(iconName: IconNameType) {
 }
 
 function useRandomICon() {
-  const icon = getIcon(Object.values(iconName)[Math.floor(Math.random() * 7)] as IconNameType)
+  const iconNameList = Object.values(iconName)
+  const icon = getIcon(iconNameList[Math.floor(Math.random() * iconNameList.length)])
   useFavicon(icon)
 }
 
