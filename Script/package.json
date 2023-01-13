@@ -1,0 +1,41 @@
+{
+  "name": "tcg-script",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx src/index.ts",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "1.0.0-rc.12",
+    "fs-extra": "^10.1.0",
+    "htmlparser": "^1.7.7",
+    "node-schedule": "^2.1.0",
+    "nodemailer": "^6.7.7",
+    "puppeteer": "^15.3.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.25.2",
+    "@types/cheerio": "^0.22.31",
+    "@types/download": "^8.0.2",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^16.11.41",
+    "@types/node-schedule": "^2.1.0",
+    "@types/nodemailer": "^6.4.4",
+    "consola": "^2.15.3",
+    "download": "^8.0.0",
+    "esbuild": "^0.14.47",
+    "eslint": "^8.18.0",
+    "tsup": "^6.1.2",
+    "tsx": "^3.12.2",
+    "typescript": "~4.7.4",
+    "vitest": "^0.16.0"
+  }
+}

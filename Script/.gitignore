@@ -1,0 +1,8 @@
+.DS_Store
+*.local
+node_modules
+.idea/
+images/
+userData/
+*.log
+
