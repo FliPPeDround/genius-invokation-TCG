@@ -3,6 +3,7 @@ package com.card.game.pojo.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 @Setter
 @TableName("sys_user")
 @ApiModel(value = "SysUserEntity对象", description = "")
+@Builder
 public class SysUserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,5 +75,17 @@ public class SysUserEntity implements Serializable {
     @TableLogic
     private Integer delFlag;
 
-
+    /**
+     * 构建默认的用户信息
+     *
+     * @return SysUserEntity
+     */
+    public static SysUserEntity buildDefaultUser() {
+        return SysUserEntity.builder()
+                .nickname("默认用户")
+                .avatar("")
+                .gender(2)
+                .lockFlag(false)
+                .build();
+    }
 }

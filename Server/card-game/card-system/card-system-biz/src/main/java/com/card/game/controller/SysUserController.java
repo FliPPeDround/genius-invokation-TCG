@@ -1,14 +1,16 @@
 package com.card.game.controller;
 
-import com.card.game.api.user.vo.SysUserVO;
 import com.card.game.common.redis.RedisCache;
 import com.card.game.common.result.Result;
-import com.card.game.pojo.dto.RegisterUserDTO;
+import com.card.game.pojo.dto.EmailRegisterDTO;
 import com.card.game.security.support.userdetails.SecurityMailUserDetails;
 import com.card.game.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -35,15 +37,15 @@ public class SysUserController {
     }
 
 
-    @PostMapping("/registerUser")
-    public Result<SysUserVO> registerUser(@RequestBody RegisterUserDTO registerUserDTO){
-        SysUserVO sysUserVO = sysUserService.registerUser(registerUserDTO);
-        return Result.success(sysUserVO);
+    @PostMapping("/mail/registerUser")
+    public Result<Map<String, Object>> registerUser(@RequestBody @Validated EmailRegisterDTO emailRegisterDTO){
+        Map<String, Object> userInfo = sysUserService.registerUser(emailRegisterDTO);
+        return Result.success(userInfo);
     }
 
     @GetMapping("/mail/isUserRegistered/{mailAccount}")
-    public Result<Boolean> isUserRegistered(@PathVariable String mailAccount){
-        Boolean flag =sysUserService.getIsUserRegistered(mailAccount);
+    public Result<Boolean> isUserRegisteredByMailAccount(@PathVariable String mailAccount){
+        Boolean flag =sysUserService.isUserRegisteredByMailAccount(mailAccount);
         return Result.success(flag);
     }
 }

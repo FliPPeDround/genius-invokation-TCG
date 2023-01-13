@@ -51,7 +51,7 @@ public class SecurityMailAuthenticationSuccessHandler implements AuthenticationS
         Map<String, Object> result = Maps.newHashMap();
         result.put(SecurityConstants.AUTHORIZATION, token);
         //密码擦除
-        principal.getSysUserDTO().setPassword(null);
+        principal.clearPassword();
         result.put(SecurityConstants.USER_INFO, principal.getSysUserDTO());
         ServletUtils.writeToJson(response, Result.success(ResultCode.AUTHENTICATION_SUCCESS, result));
     }

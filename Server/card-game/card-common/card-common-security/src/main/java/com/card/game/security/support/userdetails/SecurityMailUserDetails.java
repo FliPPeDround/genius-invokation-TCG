@@ -70,4 +70,8 @@ public class SecurityMailUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void clearPassword(){
+        this.getSysUserDTO().setPassword(null);
+    }
 }

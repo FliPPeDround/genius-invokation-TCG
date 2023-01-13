@@ -1,9 +1,10 @@
 package com.card.game.service;
 
-import com.card.game.api.user.vo.SysUserVO;
-import com.card.game.pojo.dto.RegisterUserDTO;
-import com.card.game.pojo.entity.SysUserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.card.game.pojo.dto.EmailRegisterDTO;
+import com.card.game.pojo.entity.SysUserEntity;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -18,19 +19,19 @@ public interface SysUserService extends IService<SysUserEntity> {
     /**
      * 注册用户
      *
-     * @param registerUserDTO 用户注册请求参数
+     * @param emailRegisterDTO 用户注册请求参数
      * @return 注册后的用户信息
      */
-    SysUserVO registerUser(RegisterUserDTO registerUserDTO);
+    Map<String, Object> registerUser(EmailRegisterDTO emailRegisterDTO);
 
 
     /**
-     * 判断用户是否已经注册
+     * 通过邮箱判断用户是否已经注册
      *
      * @param mailAccount 邮箱账户
      * @return 是否已注册
      */
-    Boolean getIsUserRegistered(String mailAccount);
+    Boolean isUserRegisteredByMailAccount(String mailAccount);
 
 
 }

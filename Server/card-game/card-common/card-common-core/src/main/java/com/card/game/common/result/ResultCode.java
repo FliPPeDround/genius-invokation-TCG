@@ -39,8 +39,11 @@ public enum ResultCode implements IResultCode, Serializable {
     ILLEGAL_TOKEN(504, "非法的Token"),
     EXPIRED_TOKEN(505, "Token已经过期"),
 
-    USER_NOT_EXIST(500,"用户还未进行注册,请注册后在进行登录")
+    USER_NOT_EXIST(500,"用户还未进行注册,请注册后在进行登录"),
 
+    USER_IS_EXIST(500,"该用户已经注册！"),
+
+    RE_PASSWORD_CHECK_ERROR(500,"两次输入的密码不一致,请重新输入!")
     ;
 
     private Integer code;

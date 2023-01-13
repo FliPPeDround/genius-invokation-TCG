@@ -89,6 +89,11 @@ public class JwtUtil {
         return builder.compact();
     }
 
+    public static String createJwt(String subject, SecurityLoginType type) {
+        JwtBuilder builder = getJwtBuilder(subject, null, getUUID(), type.getValue());
+        return builder.compact();
+    }
+
     /**
      * 生成jtw
      *
